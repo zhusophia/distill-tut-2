@@ -1,0 +1,63 @@
+---
+title: "second test"
+description: |
+  Welcome to the website. I hope you enjoy it!
+site: distill::distill_website
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(tidyverse)
+library(ggthemes)
+library(knitr)
+library(rmarkdown)
+library(gt)
+
+# Learn more about creating websites with Distill at:
+# https://rstudio.github.io/distill/website.html
+
+# Learn more about publishing to GitHub Pages at:
+# https://rstudio.github.io/distill/publish_website.html#github-pages
+
+```
+```{r}
+car_plot <- mtcars %>% 
+  select(mpg, wt) %>% 
+  ggplot(mapping = aes(x = wt, y = mpg))+
+  geom_point()+
+  geom_smooth(method = "lm", formula = y ~ x, se = FALSE)+
+  theme_clean()+
+  labs(title = "yes", subtitle = "yes", x = "si", y = "ja", 
+       caption = "national yes association")
+
+car_plot
+
+```
+
+```{r, table_1}
+table <- mtcars  %>% 
+arrange(mpg)
+
+```
+
+```{r, table_2}
+kable(table)
+```
+
+```{r, table_3, layout = "l-body-outset"}
+paged_table(table, options(cols.print = 12))
+```
+
+```{r, table_4}
+gt(table, rownames_to_stub = TRUE) %>% 
+  tab_header(title = md("**auto**"), subtitle = "idk") %>% 
+  tab_source_note("data") %>% 
+  tab_spanner(label = "Variable Group A", columns = c(mpg, cyl, disp, hp, drat))
+
+```
+
+```{r, image}
+  include_graphics(~Documents/R_Course/Github_Projects/distill-tut-2/images/hi.png)
+```
+
+
